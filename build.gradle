@@ -1,14 +1,17 @@
 buildscript {
     repositories {
         maven { url = 'https://files.minecraftforge.net/maven' }
+        maven { url "https://plugins.gradle.org/m2/" }
         jcenter()
         mavenCentral()
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
+        classpath group: 'com.wynprice.cursemaven', name: 'CurseMaven', version: '2.1.1'
     }
 }
 apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'com.wynprice.cursemaven'
 
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
@@ -76,6 +79,14 @@ repositories {
         url = "https://dvs1.progwml6.com/files/maven/"
     }
     maven {
+        name = "ModMaven"
+        url = "https://modmaven.k-4u.nl"
+    }
+    maven {
+		name "CurseForge"
+		url "https://minecraft.curseforge.com/api/maven/"
+	}
+    maven {
         url 'https://www.dogforce-games.com/maven/'
     }
 }
@@ -86,6 +97,8 @@ dependencies {
     compileOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}:api")
     runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}")
     
+    implementation(fg.deobf("curse.maven:biomes-o-plenty:${bop_version}"))
+    implementation(fg.deobf("curse.maven:biomes-o-plenty-source:${bop_sources_version}"))
 }
 
 jar {
