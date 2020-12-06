@@ -10,6 +10,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLDedicatedServerSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import tv.mapper.blockrunner.config.ConfigChecker;
 import tv.mapper.blockrunner.config.RunnerConfig;
 
 @Mod(BlockRunner.MODID)
@@ -31,6 +32,8 @@ public class BlockRunner
     private void setup(final FMLCommonSetupEvent event)
     {
         LOGGER.info("Block Runner setup started!");
+
+        ConfigChecker.check();
     }
 
     private void clientSetup(final FMLClientSetupEvent event)
