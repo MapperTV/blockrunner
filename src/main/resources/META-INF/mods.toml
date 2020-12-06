@@ -1,0 +1,28 @@
+modLoader="javafml"
+loaderVersion="[35,)"
+license="MIT License"
+issueTrackerURL="https://github.com/MapperTV/blockrunner/issues"
+[[mods]]
+modId="blockrunner"
+version="${file.jarVersion}"
+displayName="BlockRunner"
+#updateJSONURL="http://myurl.me/"
+displayURL="http://mapper.tv/blockrunner"
+logoFile="blockrunner_logo.png"
+credits="The Forge team and community for the help and resources."
+authors="Mapper"
+description="BlockRunner allows moving faster on specific blocks that can be configured so building roads has actual advantage."
+
+[[dependencies.blockrunner]]
+    modId="forge"
+    mandatory=true
+    versionRange="[35.1.0,)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.blockrunner]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.16.4]"
+    ordering="NONE"
+    side="BOTH"
