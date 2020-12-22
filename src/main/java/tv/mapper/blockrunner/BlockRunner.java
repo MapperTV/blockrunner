@@ -18,15 +18,15 @@ public class BlockRunner
 {
     public static final String MODID = "blockrunner";
     public static final Logger LOGGER = LogManager.getLogger();
+    public static final boolean debug = false;
 
     public BlockRunner()
     {
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, RunnerConfig.COMMON_CONFIG);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, RunnerConfig.SERVER_CONFIG);
 
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::serverSetup);
-
     }
 
     private void setup(final FMLCommonSetupEvent event)

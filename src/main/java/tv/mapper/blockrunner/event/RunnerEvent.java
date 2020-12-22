@@ -17,24 +17,42 @@ import tv.mapper.blockrunner.config.RunnerConfig;
 @Mod.EventBusSubscriber
 public class RunnerEvent
 {
-    private static AttributeModifier roadAttributeA = new AttributeModifier(UUID.fromString(
-        "aed652ce-7d33-480e-89ca-dacf858d7596"), "Road Speed Modifier A", RunnerConfig.CommonConfig.CONFIG_A_SPEED.get(), AttributeModifier.Operation.MULTIPLY_TOTAL);
-    private static AttributeModifier roadAttributeB = new AttributeModifier(UUID.fromString(
-        "1df40977-2b88-4f19-97c8-bcb2fe280054"), "Road Speed Modifier B", RunnerConfig.CommonConfig.CONFIG_B_SPEED.get(), AttributeModifier.Operation.MULTIPLY_TOTAL);
-    private static AttributeModifier roadAttributeC = new AttributeModifier(UUID.fromString(
-        "181b23a1-4974-4832-bd10-41f38e8bbe10"), "Road Speed Modifier C", RunnerConfig.CommonConfig.CONFIG_C_SPEED.get(), AttributeModifier.Operation.MULTIPLY_TOTAL);
-    private static AttributeModifier roadAttributeD = new AttributeModifier(UUID.fromString(
-        "bfab8ac9-05ee-4ffe-89ff-218742d32cc2"), "Road Speed Modifier D", RunnerConfig.CommonConfig.CONFIG_D_SPEED.get(), AttributeModifier.Operation.MULTIPLY_TOTAL);
-    private static AttributeModifier roadAttributeE = new AttributeModifier(UUID.fromString(
-        "29520a66-3e58-423a-ab0a-cad04e9f5e41"), "Road Speed Modifier E", RunnerConfig.CommonConfig.CONFIG_E_SPEED.get(), AttributeModifier.Operation.MULTIPLY_TOTAL);
+    // private static double testSpeed = RunnerConfig.CONFIG_A_SPEED;
+
+    private static AttributeModifier roadAttributeA;
+    private static AttributeModifier roadAttributeB;
+    private static AttributeModifier roadAttributeC;
+    private static AttributeModifier roadAttributeD;
+    private static AttributeModifier roadAttributeE;
 
     private static int attribute = 0;
     private static int previousAttribute = 0;
+    private static boolean firstLaunch = true;
+
+    // Initialize attribute after server started to be sure they get custom config values, otherwise they won't for some reason I can't find
+    private static void initAttributes()
+    {
+        roadAttributeA = new AttributeModifier(UUID.fromString(
+            "aed652ce-7d33-480e-89ca-dacf858d7596"), "Road Speed Modifier A", RunnerConfig.ServerConfig.CONFIG_A_SPEED.get(), AttributeModifier.Operation.ADDITION);
+        roadAttributeB = new AttributeModifier(UUID.fromString(
+            "1df40977-2b88-4f19-97c8-bcb2fe280054"), "Road Speed Modifier B", RunnerConfig.ServerConfig.CONFIG_B_SPEED.get(), AttributeModifier.Operation.ADDITION);
+        roadAttributeC = new AttributeModifier(UUID.fromString(
+            "181b23a1-4974-4832-bd10-41f38e8bbe10"), "Road Speed Modifier C", RunnerConfig.ServerConfig.CONFIG_C_SPEED.get(), AttributeModifier.Operation.ADDITION);
+        roadAttributeD = new AttributeModifier(UUID.fromString(
+            "bfab8ac9-05ee-4ffe-89ff-218742d32cc2"), "Road Speed Modifier D", RunnerConfig.ServerConfig.CONFIG_D_SPEED.get(), AttributeModifier.Operation.ADDITION);
+        roadAttributeE = new AttributeModifier(UUID.fromString(
+            "29520a66-3e58-423a-ab0a-cad04e9f5e41"), "Road Speed Modifier E", RunnerConfig.ServerConfig.CONFIG_E_SPEED.get(), AttributeModifier.Operation.ADDITION);
+
+        firstLaunch = false;
+    }
 
     @SubscribeEvent
     public static void detectRoad(LivingEvent.LivingUpdateEvent event)
     {
         LivingEntity player = (LivingEntity)event.getEntity();
+
+        if(firstLaunch)
+            initAttributes();
 
         if(player instanceof PlayerEntity && !player.getEntityWorld().isRemote)
         {
@@ -46,25 +64,34 @@ public class RunnerEvent
                 previousAttribute = attribute;
                 attribute = 0;
 
-                if(RunnerConfig.CommonConfig.CONFIG_A_BLOCKS.get().contains(playerBlock) && RunnerConfig.CommonConfig.CONFIG_A_ENABLE.get())
+                if(RunnerConfig.ServerConfig.CONFIG_A_BLOCKS.get().contains(playerBlock) && RunnerConfig.ServerConfig.CONFIG_A_ENABLE.get())
                     attribute = 1;
-                else if(RunnerConfig.CommonConfig.CONFIG_B_BLOCKS.get().contains(playerBlock) && RunnerConfig.CommonConfig.CONFIG_B_ENABLE.get())
+                else if(RunnerConfig.ServerConfig.CONFIG_B_BLOCKS.get().contains(playerBlock) && RunnerConfig.ServerConfig.CONFIG_B_ENABLE.get())
                     attribute = 2;
-                else if(RunnerConfig.CommonConfig.CONFIG_C_BLOCKS.get().contains(playerBlock) && RunnerConfig.CommonConfig.CONFIG_C_ENABLE.get())
+                else if(RunnerConfig.ServerConfig.CONFIG_C_BLOCKS.get().contains(playerBlock) && RunnerConfig.ServerConfig.CONFIG_C_ENABLE.get())
                     attribute = 3;
-                else if(RunnerConfig.CommonConfig.CONFIG_D_BLOCKS.get().contains(playerBlock) && RunnerConfig.CommonConfig.CONFIG_D_ENABLE.get())
+                else if(RunnerConfig.ServerConfig.CONFIG_D_BLOCKS.get().contains(playerBlock) && RunnerConfig.ServerConfig.CONFIG_D_ENABLE.get())
                     attribute = 4;
-                else if(RunnerConfig.CommonConfig.CONFIG_E_BLOCKS.get().contains(playerBlock) && RunnerConfig.CommonConfig.CONFIG_E_ENABLE.get())
+                else if(RunnerConfig.ServerConfig.CONFIG_E_BLOCKS.get().contains(playerBlock) && RunnerConfig.ServerConfig.CONFIG_E_ENABLE.get())
                     attribute = 5;
 
                 if(attribute >= 0 && attribute <= 5 && attribute != previousAttribute)
+                {
+                    if(BlockRunner.debug)
+                        BlockRunner.LOGGER.debug(
+                            "Walking on block " + playerBlock + ", applying attribute n°" + attribute + " TEST " + roadAttributeA.getAmount() + "/" + RunnerConfig.ServerConfig.CONFIG_A_SPEED.get());
+
                     applyAttribute(previousAttribute, attribute, (PlayerEntity)player);
+                }
             }
         }
     }
 
     private static void resetAttribute(int previousAttribute, PlayerEntity entity)
     {
+        if(BlockRunner.debug)
+            BlockRunner.LOGGER.debug("Previous: " + previousAttribute);
+
         switch(previousAttribute)
         {
             case 1:
@@ -120,5 +147,8 @@ public class RunnerEvent
                 BlockRunner.LOGGER.error("Invalid attribute selected!");
                 break;
         }
+
+        if(BlockRunner.debug)
+            BlockRunner.LOGGER.debug("New speed: " + entity.getAttribute(Attributes.MOVEMENT_SPEED).getValue());
     }
 }
