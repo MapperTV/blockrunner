@@ -1,5 +1,7 @@
 package tv.mapper.blockrunner.event;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import net.minecraft.block.Block;
@@ -7,6 +9,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -93,6 +96,43 @@ public class RunnerEvent
                 previousAttribute = attribute;
                 attribute = 0;
 
+                List<String> blockTags = new ArrayList<String>();
+
+                for(ResourceLocation s : block.getTags())
+                {
+                    blockTags.add("#" + s);
+                }
+
+                for(String entry : RunnerConfig.ServerConfig.CONFIG_A_BLOCKS.get())
+                {
+                    if(entry.startsWith("#") && blockTags.contains(entry) && attribute == 0)
+                        attribute = 1;
+                }
+                if(attribute == 0)
+                    for(String entry : RunnerConfig.ServerConfig.CONFIG_B_BLOCKS.get())
+                    {
+                        if(entry.startsWith("#") && blockTags.contains(entry) && attribute == 0)
+                            attribute = 2;
+                    }
+                if(attribute == 0)
+                    for(String entry : RunnerConfig.ServerConfig.CONFIG_C_BLOCKS.get())
+                    {
+                        if(entry.startsWith("#") && blockTags.contains(entry) && attribute == 0)
+                            attribute = 3;
+                    }
+                if(attribute == 0)
+                    for(String entry : RunnerConfig.ServerConfig.CONFIG_D_BLOCKS.get())
+                    {
+                        if(entry.startsWith("#") && blockTags.contains(entry) && attribute == 0)
+                            attribute = 4;
+                    }
+                if(attribute == 0)
+                    for(String entry : RunnerConfig.ServerConfig.CONFIG_E_BLOCKS.get())
+                    {
+                        if(entry.startsWith("#") && blockTags.contains(entry) && attribute == 0)
+                            attribute = 5;
+                    }
+
                 if(RunnerConfig.ServerConfig.CONFIG_A_BLOCKS.get().contains(playerBlock) && RunnerConfig.ServerConfig.CONFIG_A_ENABLE.get())
                     attribute = 1;
                 else if(RunnerConfig.ServerConfig.CONFIG_B_BLOCKS.get().contains(playerBlock) && RunnerConfig.ServerConfig.CONFIG_B_ENABLE.get())
@@ -107,8 +147,7 @@ public class RunnerEvent
                 if(attribute >= 0 && attribute <= 5 && attribute != previousAttribute)
                 {
                     if(BlockRunner.debug)
-                        BlockRunner.LOGGER.debug(
-                            "Walking on block " + playerBlock + ", applying attribute n°" + attribute + " TEST " + roadAttributeA.getAmount() + "/" + RunnerConfig.ServerConfig.CONFIG_A_SPEED.get());
+                        BlockRunner.LOGGER.debug("Walking on block " + block + ", applying attribute n°" + attribute);
 
                     applyAttribute(previousAttribute, attribute, (PlayerEntity)player);
                 }

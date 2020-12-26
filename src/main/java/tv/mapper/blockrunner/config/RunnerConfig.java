@@ -49,7 +49,7 @@ public class RunnerConfig
         {
             // Defaut config A
             default_config_a.add("minecraft:grass_path");
-            default_config_a.add("minecraft:cobblestone");
+            default_config_a.add("#forge:cobblestone");
             default_config_a.add("minecraft:mossy_cobblestone");
             default_config_a.add("minecraft:cobblestone_stairs");
             default_config_a.add("minecraft:cobblestone_slab");
@@ -58,12 +58,9 @@ public class RunnerConfig
             default_config_a.add("minecraft:infested_cobblestone");
 
             // Default config B
-            default_config_b.add("minecraft:stone_bricks");
+            default_config_b.add("#minecraft:stone_bricks");
             default_config_b.add("minecraft:stone_brick_stairs");
-            default_config_b.add("minecraft:mossy_stone_bricks");
             default_config_b.add("minecraft:mossy_stone_brick_stairs");
-            default_config_b.add("minecraft:cracked_stone_bricks");
-            default_config_b.add("minecraft:chiseled_stone_bricks");
             default_config_b.add("minecraft:infested_stone_bricks");
             default_config_b.add("minecraft:infested_mossy_stone_bricks");
             default_config_b.add("minecraft:infested_cracked_stone_bricks");
@@ -80,36 +77,41 @@ public class RunnerConfig
             serverBuilder.comment("Config A").push("config_a");
 
             CONFIG_A_ENABLE = serverBuilder.comment("Enable config A? [true / false]").define("configAEnabled", true);
-            CONFIG_A_BLOCKS = serverBuilder.comment("List of blocks for config A (format is \"modid:block_name\")").define("configABlocks", default_config_a);
-            CONFIG_A_SPEED = serverBuilder.comment("Speed bonus [default: 0.015]").defineInRange("configASpeed", 0.015, -1.0, 1.0);
+            CONFIG_A_BLOCKS = serverBuilder.comment("List of blocks or tags for config A (format is \"modid:block_name\" for a block and \"#namespace:tag_name\" for a tag)").define("configABlocks",
+                default_config_a);
+            CONFIG_A_SPEED = serverBuilder.comment("Speed bonus [default: 0.015]").defineInRange("configASpeed", 0.015, -0.1, 1.0);
 
             serverBuilder.pop();
             serverBuilder.comment("Config B").push("config_b");
 
             CONFIG_B_ENABLE = serverBuilder.comment("Enable config B? [true / false]").define("configBEnabled", true);
-            CONFIG_B_BLOCKS = serverBuilder.comment("List of blocks for config B (format is \"modid:block_name\")").define("configBBlocks", default_config_b);
-            CONFIG_B_SPEED = serverBuilder.comment("Speed bonus [default: 0.03]").defineInRange("configBSpeed", 0.03, -1.0, 1.0);
+            CONFIG_B_BLOCKS = serverBuilder.comment("List of blocks or tags for config B (format is \"modid:block_name\" for a block and \"#namespace:tag_name\" for a tag)").define("configBBlocks",
+                default_config_b);
+            CONFIG_B_SPEED = serverBuilder.comment("Speed bonus [default: 0.03]").defineInRange("configBSpeed", 0.03, -0.1, 1.0);
 
             serverBuilder.pop();
             serverBuilder.comment("Config C").push("config_c");
 
             CONFIG_C_ENABLE = serverBuilder.comment("Enable config C? [true / false]").define("configCEnabled", false);
-            CONFIG_C_BLOCKS = serverBuilder.comment("List of blocks for config C (format is \"modid:block_name\")").define("configCBlocks", new ArrayList<>());
-            CONFIG_C_SPEED = serverBuilder.comment("Speed bonus").defineInRange("configCSpeed", 0, -1.0, 1.0);
+            CONFIG_C_BLOCKS = serverBuilder.comment("List of blocks or tags for config C (format is \"modid:block_name\" for a block and \"#namespace:tag_name\" for a tag)").define("configCBlocks",
+                new ArrayList<>());
+            CONFIG_C_SPEED = serverBuilder.comment("Speed bonus").defineInRange("configCSpeed", 0, -0.1, 1.0);
 
             serverBuilder.pop();
             serverBuilder.comment("Config D").push("config_d");
 
             CONFIG_D_ENABLE = serverBuilder.comment("Enable config D? [true / false]").define("configDEnabled", false);
-            CONFIG_D_BLOCKS = serverBuilder.comment("List of blocks for config D (format is \"modid:block_name\")").define("configDBlocks", new ArrayList<>());
-            CONFIG_D_SPEED = serverBuilder.comment("Speed bonus").defineInRange("configDSpeed", 0, -1.0, 1.0);
+            CONFIG_D_BLOCKS = serverBuilder.comment("List of blocks or tags for config D (format is \"modid:block_name\" for a block and \"#namespace:tag_name\" for a tag)").define("configDBlocks",
+                new ArrayList<>());
+            CONFIG_D_SPEED = serverBuilder.comment("Speed bonus").defineInRange("configDSpeed", 0, -0.1, 1.0);
 
             serverBuilder.pop();
             serverBuilder.comment("Config E").push("config_e");
 
             CONFIG_E_ENABLE = serverBuilder.comment("Enable config E? [true / false]").define("configEEnabled", false);
-            CONFIG_E_BLOCKS = serverBuilder.comment("List of blocks for config E (format is \"modid:block_name\")").define("configEBlocks", new ArrayList<>());
-            CONFIG_E_SPEED = serverBuilder.comment("Speed bonus").defineInRange("configESpeed", 0, -1.0, 1.0);
+            CONFIG_E_BLOCKS = serverBuilder.comment("List of blocks or tags for config E (format is \"modid:block_name\" for a block and \"#namespace:tag_name\" for a tag)").define("configEBlocks",
+                new ArrayList<>());
+            CONFIG_E_SPEED = serverBuilder.comment("Speed bonus").defineInRange("configESpeed", 0, -0.1, 1.0);
 
             serverBuilder.pop();
         }
