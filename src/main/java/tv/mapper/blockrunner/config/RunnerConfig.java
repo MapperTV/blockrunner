@@ -6,7 +6,6 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
-import tv.mapper.blockrunner.BlockRunner;
 
 public class RunnerConfig
 {
@@ -48,8 +47,6 @@ public class RunnerConfig
 
         ServerConfig(ForgeConfigSpec.Builder serverBuilder)
         {
-            BlockRunner.LOGGER.debug("◘ Config time");
-
             // Defaut config A
             default_config_a.add("minecraft:grass_path");
             default_config_a.add("minecraft:cobblestone");

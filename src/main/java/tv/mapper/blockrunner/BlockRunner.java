@@ -12,6 +12,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLDedicatedServerSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import tv.mapper.blockrunner.config.ConfigChecker;
 import tv.mapper.blockrunner.config.RunnerConfig;
+import tv.mapper.blockrunner.event.RunnerEvent;
 
 @Mod(BlockRunner.MODID)
 public class BlockRunner
@@ -27,6 +28,8 @@ public class BlockRunner
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::serverSetup);
+
+        RunnerEvent.init();
     }
 
     private void setup(final FMLCommonSetupEvent event)

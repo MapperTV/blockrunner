@@ -33,16 +33,16 @@ public class ConfigChecker
             {
                 case 5:
                     if(RunnerConfig.ServerConfig.CONFIG_D_BLOCKS.get().contains(block))
-                        BlockRunner.LOGGER.warn("5- Block " + block + " is already listed in config D and will be skipped for config " + attribute + ".");
+                        BlockRunner.LOGGER.warn("Block " + block + " is already listed in config D and will be skipped for config " + attribute + ".");
                 case 4:
                     if(RunnerConfig.ServerConfig.CONFIG_C_BLOCKS.get().contains(block))
-                        BlockRunner.LOGGER.warn("4- Block " + block + " is already listed in config C and will be skipped for config " + attribute + ".");
+                        BlockRunner.LOGGER.warn("Block " + block + " is already listed in config C and will be skipped for config " + attribute + ".");
                 case 3:
                     if(RunnerConfig.ServerConfig.CONFIG_B_BLOCKS.get().contains(block))
-                        BlockRunner.LOGGER.warn("3- Block " + block + " is already listed in config B and will be skipped for config " + attribute + ".");
+                        BlockRunner.LOGGER.warn("Block " + block + " is already listed in config B and will be skipped for config " + attribute + ".");
                 case 2:
                     if(RunnerConfig.ServerConfig.CONFIG_A_BLOCKS.get().contains(block))
-                        BlockRunner.LOGGER.warn("2- Block " + block + " is already listed in config A and will be skipped for config " + attribute + ".");
+                        BlockRunner.LOGGER.warn("Block " + block + " is already listed in config A and will be skipped for config " + attribute + ".");
                     break;
             }
 
