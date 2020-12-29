@@ -41,41 +41,55 @@ public class RunnerEvent
     static void configChange(final ModConfig.Reloading event)
     {
         ModConfig config = event.getConfig();
+        // double speedA, speedB, speedC, speedD, speedE;
 
-        if(config.getConfigData().get("config_a.configASpeed") != null)
-            roadAttributeA = new AttributeModifier(UUID.fromString("aed652ce-7d33-480e-89ca-dacf858d7596"), "Road Speed Modifier A", config.getConfigData().get(
-                "config_a.configASpeed"), AttributeModifier.Operation.ADDITION);
-        if(config.getConfigData().get("config_b.configBSpeed") != null)
-            roadAttributeB = new AttributeModifier(UUID.fromString("1df40977-2b88-4f19-97c8-bcb2fe280054"), "Road Speed Modifier B", config.getConfigData().get(
-                "config_b.configBSpeed"), AttributeModifier.Operation.ADDITION);
-        if(config.getConfigData().get("config_c.configCSpeed") != null)
-            roadAttributeC = new AttributeModifier(UUID.fromString("181b23a1-4974-4832-bd10-41f38e8bbe10"), "Road Speed Modifier C", config.getConfigData().get(
-                "config_c.configCSpeed"), AttributeModifier.Operation.ADDITION);
-        if(config.getConfigData().get("config_d.configDSpeed") != null)
-            roadAttributeD = new AttributeModifier(UUID.fromString("bfab8ac9-05ee-4ffe-89ff-218742d32cc2"), "Road Speed Modifier D", config.getConfigData().get(
-                "config_d.configDSpeed"), AttributeModifier.Operation.ADDITION);
-        if(config.getConfigData().get("config_e.configESpeed") != null)
-            roadAttributeE = new AttributeModifier(UUID.fromString("29520a66-3e58-423a-ab0a-cad04e9f5e41"), "Road Speed Modifier E", config.getConfigData().get(
-                "config_e.configESpeed"), AttributeModifier.Operation.ADDITION);
+        List<Double> speeds = new ArrayList<Double>();
+
+        speeds.add(config.getConfigData().get("config_a.configASpeed") == null ? 0.0d : (double)config.getConfigData().get(
+            "config_a.configASpeed") > 1.0d ? 1.0d : (double)config.getConfigData().get("config_a.configASpeed") < -0.1d ? -0.1d : config.getConfigData().get("config_a.configASpeed"));
+        speeds.add(config.getConfigData().get("config_b.configBSpeed") == null ? 0.0d : (double)config.getConfigData().get(
+            "config_b.configBSpeed") > 1.0d ? 1.0d : (double)config.getConfigData().get("config_b.configBSpeed") < -0.1d ? -0.1d : config.getConfigData().get("config_b.configBSpeed"));
+        speeds.add(config.getConfigData().get("config_c.configCSpeed") == null ? 0.0d : (double)config.getConfigData().get(
+            "config_c.configCSpeed") > 1.0d ? 1.0d : (double)config.getConfigData().get("config_c.configCSpeed") < -0.1d ? -0.1d : config.getConfigData().get("config_c.configCSpeed"));
+        speeds.add(config.getConfigData().get("config_d.configDSpeed") == null ? 0.0d : (double)config.getConfigData().get(
+            "config_d.configDSpeed") > 1.0d ? 1.0d : (double)config.getConfigData().get("config_d.configDSpeed") < -0.1d ? -0.1d : config.getConfigData().get("config_d.configDSpeed"));
+        speeds.add(config.getConfigData().get("config_e.configESpeed") == null ? 0.0d : (double)config.getConfigData().get(
+            "config_e.configESpeed") > 1.0d ? 1.0d : (double)config.getConfigData().get("config_e.configESpeed") < -0.1d ? -0.1d : config.getConfigData().get("config_e.configESpeed"));
+
+        // speeds.add(config.getConfigData().get("config_b.configBSpeed") != null ? config.getConfigData().get("config_b.configBSpeed") : 0.0d);
+        // speeds.add(config.getConfigData().get("config_c.configCSpeed") != null ? config.getConfigData().get("config_c.configCSpeed") : 0.0d);
+        // speeds.add(config.getConfigData().get("config_d.configDSpeed") != null ? config.getConfigData().get("config_d.configDSpeed") : 0.0d);
+        // speeds.add(config.getConfigData().get("config_e.configESpeed") != null ? config.getConfigData().get("config_e.configESpeed") : 0.0d);
+
+        // Restrict value to 1.0 max
+        // speedA = speedA > 1.0 ? 1.0 : speedA;
+        // speedB = speedB > 1.0 ? 1.0 : speedB;
+        // speedC = speedC > 1.0 ? 1.0 : speedC;
+        // speedD = speedD > 1.0 ? 1.0 : speedD;
+        // speedE = speedE > 1.0 ? 1.0 : speedE;
+        // Restrict value to -0.1 min
+        // speedA = speedA < -0.1 ? -0.1 : speedA;
+        // speedB = speedB < -0.1 ? -0.1 : speedB;
+        // speedC = speedC < -0.1 ? -0.1 : speedC;
+        // speedD = speedD < -0.1 ? -0.1 : speedD;
+        // speedE = speedE < -0.1 ? -0.1 : speedE;
+
+        if(BlockRunner.debug)
+            BlockRunner.LOGGER.debug("New speed values: " + speeds.get(0) + ", " + speeds.get(1) + ", " + speeds.get(2) + ", " + speeds.get(3) + ", " + speeds.get(4));
+
+        setAttributes(speeds.get(0), speeds.get(1), speeds.get(2), speeds.get(3), speeds.get(4));
+
         BlockRunner.LOGGER.info("Updated config changes!");
         ConfigChecker.check();
     }
 
-    // Initialize attribute after server started to be sure they get custom config values, otherwise they won't for some reason I can't find
-    private static void initAttributes()
+    private static void setAttributes(double speedA, double speedB, double speedC, double speedD, double speedE)
     {
-        roadAttributeA = new AttributeModifier(UUID.fromString(
-            "aed652ce-7d33-480e-89ca-dacf858d7596"), "Road Speed Modifier A", RunnerConfig.ServerConfig.CONFIG_A_SPEED.get(), AttributeModifier.Operation.ADDITION);
-        roadAttributeB = new AttributeModifier(UUID.fromString(
-            "1df40977-2b88-4f19-97c8-bcb2fe280054"), "Road Speed Modifier B", RunnerConfig.ServerConfig.CONFIG_B_SPEED.get(), AttributeModifier.Operation.ADDITION);
-        roadAttributeC = new AttributeModifier(UUID.fromString(
-            "181b23a1-4974-4832-bd10-41f38e8bbe10"), "Road Speed Modifier C", RunnerConfig.ServerConfig.CONFIG_C_SPEED.get(), AttributeModifier.Operation.ADDITION);
-        roadAttributeD = new AttributeModifier(UUID.fromString(
-            "bfab8ac9-05ee-4ffe-89ff-218742d32cc2"), "Road Speed Modifier D", RunnerConfig.ServerConfig.CONFIG_D_SPEED.get(), AttributeModifier.Operation.ADDITION);
-        roadAttributeE = new AttributeModifier(UUID.fromString(
-            "29520a66-3e58-423a-ab0a-cad04e9f5e41"), "Road Speed Modifier E", RunnerConfig.ServerConfig.CONFIG_E_SPEED.get(), AttributeModifier.Operation.ADDITION);
-
-        firstLaunch = false;
+        roadAttributeA = new AttributeModifier(UUID.fromString("aed652ce-7d33-480e-89ca-dacf858d7596"), "Road Speed Modifier A", speedA, AttributeModifier.Operation.ADDITION);
+        roadAttributeB = new AttributeModifier(UUID.fromString("1df40977-2b88-4f19-97c8-bcb2fe280054"), "Road Speed Modifier B", speedB, AttributeModifier.Operation.ADDITION);
+        roadAttributeC = new AttributeModifier(UUID.fromString("181b23a1-4974-4832-bd10-41f38e8bbe10"), "Road Speed Modifier C", speedC, AttributeModifier.Operation.ADDITION);
+        roadAttributeD = new AttributeModifier(UUID.fromString("bfab8ac9-05ee-4ffe-89ff-218742d32cc2"), "Road Speed Modifier D", speedD, AttributeModifier.Operation.ADDITION);
+        roadAttributeE = new AttributeModifier(UUID.fromString("29520a66-3e58-423a-ab0a-cad04e9f5e41"), "Road Speed Modifier E", speedE, AttributeModifier.Operation.ADDITION);
     }
 
     @SubscribeEvent
@@ -84,7 +98,11 @@ public class RunnerEvent
         LivingEntity player = (LivingEntity)event.getEntity();
 
         if(firstLaunch)
-            initAttributes();
+        {
+            setAttributes(RunnerConfig.ServerConfig.CONFIG_A_SPEED.get(), RunnerConfig.ServerConfig.CONFIG_B_SPEED.get(), RunnerConfig.ServerConfig.CONFIG_C_SPEED.get(),
+                RunnerConfig.ServerConfig.CONFIG_D_SPEED.get(), RunnerConfig.ServerConfig.CONFIG_E_SPEED.get());
+            firstLaunch = false;
+        }
 
         if(player instanceof PlayerEntity && !player.getEntityWorld().isRemote)
         {
@@ -99,39 +117,52 @@ public class RunnerEvent
                 List<String> blockTags = new ArrayList<String>();
 
                 for(ResourceLocation s : block.getTags())
-                {
                     blockTags.add("#" + s);
-                }
 
                 for(String entry : RunnerConfig.ServerConfig.CONFIG_A_BLOCKS.get())
-                {
-                    if(entry.startsWith("#") && blockTags.contains(entry) && attribute == 0)
+                    if(entry.startsWith("#") && blockTags.contains(entry))
+                    {
                         attribute = 1;
-                }
-                if(attribute == 0)
+                        break;
+                    }
+
+                if(attribute < 1)
+                {
                     for(String entry : RunnerConfig.ServerConfig.CONFIG_B_BLOCKS.get())
-                    {
-                        if(entry.startsWith("#") && blockTags.contains(entry) && attribute == 0)
+                        if(entry.startsWith("#") && blockTags.contains(entry))
+                        {
                             attribute = 2;
-                    }
-                if(attribute == 0)
-                    for(String entry : RunnerConfig.ServerConfig.CONFIG_C_BLOCKS.get())
+                            break;
+                        }
+
+                    if(attribute < 2)
                     {
-                        if(entry.startsWith("#") && blockTags.contains(entry) && attribute == 0)
-                            attribute = 3;
+                        for(String entry : RunnerConfig.ServerConfig.CONFIG_C_BLOCKS.get())
+                            if(entry.startsWith("#") && blockTags.contains(entry))
+                            {
+                                attribute = 3;
+                                break;
+                            }
+
+                        if(attribute < 3)
+                        {
+                            for(String entry : RunnerConfig.ServerConfig.CONFIG_D_BLOCKS.get())
+                                if(entry.startsWith("#") && blockTags.contains(entry))
+                                {
+                                    attribute = 4;
+                                    break;
+                                }
+
+                            if(attribute < 4)
+                                for(String entry : RunnerConfig.ServerConfig.CONFIG_E_BLOCKS.get())
+                                    if(entry.startsWith("#") && blockTags.contains(entry))
+                                    {
+                                        attribute = 5;
+                                        break;
+                                    }
+                        }
                     }
-                if(attribute == 0)
-                    for(String entry : RunnerConfig.ServerConfig.CONFIG_D_BLOCKS.get())
-                    {
-                        if(entry.startsWith("#") && blockTags.contains(entry) && attribute == 0)
-                            attribute = 4;
-                    }
-                if(attribute == 0)
-                    for(String entry : RunnerConfig.ServerConfig.CONFIG_E_BLOCKS.get())
-                    {
-                        if(entry.startsWith("#") && blockTags.contains(entry) && attribute == 0)
-                            attribute = 5;
-                    }
+                }
 
                 if(RunnerConfig.ServerConfig.CONFIG_A_BLOCKS.get().contains(playerBlock) && RunnerConfig.ServerConfig.CONFIG_A_ENABLE.get())
                     attribute = 1;

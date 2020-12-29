@@ -77,7 +77,7 @@ public class RunnerConfig
             serverBuilder.comment("Config A").push("config_a");
 
             CONFIG_A_ENABLE = serverBuilder.comment("Enable config A? [true / false]").define("configAEnabled", true);
-            CONFIG_A_BLOCKS = serverBuilder.comment("List of blocks or tags for config A (format is \"modid:block_name\" for a block and \"#namespace:tag_name\" for a tag)").define("configABlocks",
+            CONFIG_A_BLOCKS = serverBuilder.comment("List of blocks or tags for config A (format is \"modid:block_name\" for a block and \"#namespace:tag_name\" for a tag); Note: blocks take priority over tags").define("configABlocks",
                 default_config_a);
             CONFIG_A_SPEED = serverBuilder.comment("Speed bonus [default: 0.015]").defineInRange("configASpeed", 0.015, -0.1, 1.0);
 
@@ -85,7 +85,7 @@ public class RunnerConfig
             serverBuilder.comment("Config B").push("config_b");
 
             CONFIG_B_ENABLE = serverBuilder.comment("Enable config B? [true / false]").define("configBEnabled", true);
-            CONFIG_B_BLOCKS = serverBuilder.comment("List of blocks or tags for config B (format is \"modid:block_name\" for a block and \"#namespace:tag_name\" for a tag)").define("configBBlocks",
+            CONFIG_B_BLOCKS = serverBuilder.comment("List of blocks or tags for config B (format is \"modid:block_name\" for a block and \"#namespace:tag_name\" for a tag); Note: blocks take priority over tags").define("configBBlocks",
                 default_config_b);
             CONFIG_B_SPEED = serverBuilder.comment("Speed bonus [default: 0.03]").defineInRange("configBSpeed", 0.03, -0.1, 1.0);
 
@@ -93,7 +93,7 @@ public class RunnerConfig
             serverBuilder.comment("Config C").push("config_c");
 
             CONFIG_C_ENABLE = serverBuilder.comment("Enable config C? [true / false]").define("configCEnabled", false);
-            CONFIG_C_BLOCKS = serverBuilder.comment("List of blocks or tags for config C (format is \"modid:block_name\" for a block and \"#namespace:tag_name\" for a tag)").define("configCBlocks",
+            CONFIG_C_BLOCKS = serverBuilder.comment("List of blocks or tags for config C (format is \"modid:block_name\" for a block and \"#namespace:tag_name\" for a tag); Note: blocks take priority over tags").define("configCBlocks",
                 new ArrayList<>());
             CONFIG_C_SPEED = serverBuilder.comment("Speed bonus").defineInRange("configCSpeed", 0, -0.1, 1.0);
 
@@ -101,7 +101,7 @@ public class RunnerConfig
             serverBuilder.comment("Config D").push("config_d");
 
             CONFIG_D_ENABLE = serverBuilder.comment("Enable config D? [true / false]").define("configDEnabled", false);
-            CONFIG_D_BLOCKS = serverBuilder.comment("List of blocks or tags for config D (format is \"modid:block_name\" for a block and \"#namespace:tag_name\" for a tag)").define("configDBlocks",
+            CONFIG_D_BLOCKS = serverBuilder.comment("List of blocks or tags for config D (format is \"modid:block_name\" for a block and \"#namespace:tag_name\" for a tag); Note: blocks take priority over tags").define("configDBlocks",
                 new ArrayList<>());
             CONFIG_D_SPEED = serverBuilder.comment("Speed bonus").defineInRange("configDSpeed", 0, -0.1, 1.0);
 
@@ -109,7 +109,7 @@ public class RunnerConfig
             serverBuilder.comment("Config E").push("config_e");
 
             CONFIG_E_ENABLE = serverBuilder.comment("Enable config E? [true / false]").define("configEEnabled", false);
-            CONFIG_E_BLOCKS = serverBuilder.comment("List of blocks or tags for config E (format is \"modid:block_name\" for a block and \"#namespace:tag_name\" for a tag)").define("configEBlocks",
+            CONFIG_E_BLOCKS = serverBuilder.comment("List of blocks or tags for config E (format is \"modid:block_name\" for a block and \"#namespace:tag_name\" for a tag); Note: blocks take priority over tags").define("configEBlocks",
                 new ArrayList<>());
             CONFIG_E_SPEED = serverBuilder.comment("Speed bonus").defineInRange("configESpeed", 0, -0.1, 1.0);
 
