@@ -19,7 +19,7 @@ public class BlockRunner
 {
     public static final String MODID = "blockrunner";
     public static final Logger LOGGER = LogManager.getLogger();
-    public static final boolean debug = true;
+    public static final boolean debug = false;
 
     public BlockRunner()
     {

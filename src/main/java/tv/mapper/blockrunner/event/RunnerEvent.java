@@ -41,7 +41,6 @@ public class RunnerEvent
     static void configChange(final ModConfig.Reloading event)
     {
         ModConfig config = event.getConfig();
-        // double speedA, speedB, speedC, speedD, speedE;
 
         List<Double> speeds = new ArrayList<Double>();
 
@@ -55,24 +54,6 @@ public class RunnerEvent
             "config_d.configDSpeed") > 1.0d ? 1.0d : (double)config.getConfigData().get("config_d.configDSpeed") < -0.1d ? -0.1d : config.getConfigData().get("config_d.configDSpeed"));
         speeds.add(config.getConfigData().get("config_e.configESpeed") == null ? 0.0d : (double)config.getConfigData().get(
             "config_e.configESpeed") > 1.0d ? 1.0d : (double)config.getConfigData().get("config_e.configESpeed") < -0.1d ? -0.1d : config.getConfigData().get("config_e.configESpeed"));
-
-        // speeds.add(config.getConfigData().get("config_b.configBSpeed") != null ? config.getConfigData().get("config_b.configBSpeed") : 0.0d);
-        // speeds.add(config.getConfigData().get("config_c.configCSpeed") != null ? config.getConfigData().get("config_c.configCSpeed") : 0.0d);
-        // speeds.add(config.getConfigData().get("config_d.configDSpeed") != null ? config.getConfigData().get("config_d.configDSpeed") : 0.0d);
-        // speeds.add(config.getConfigData().get("config_e.configESpeed") != null ? config.getConfigData().get("config_e.configESpeed") : 0.0d);
-
-        // Restrict value to 1.0 max
-        // speedA = speedA > 1.0 ? 1.0 : speedA;
-        // speedB = speedB > 1.0 ? 1.0 : speedB;
-        // speedC = speedC > 1.0 ? 1.0 : speedC;
-        // speedD = speedD > 1.0 ? 1.0 : speedD;
-        // speedE = speedE > 1.0 ? 1.0 : speedE;
-        // Restrict value to -0.1 min
-        // speedA = speedA < -0.1 ? -0.1 : speedA;
-        // speedB = speedB < -0.1 ? -0.1 : speedB;
-        // speedC = speedC < -0.1 ? -0.1 : speedC;
-        // speedD = speedD < -0.1 ? -0.1 : speedD;
-        // speedE = speedE < -0.1 ? -0.1 : speedE;
 
         if(BlockRunner.debug)
             BlockRunner.LOGGER.debug("New speed values: " + speeds.get(0) + ", " + speeds.get(1) + ", " + speeds.get(2) + ", " + speeds.get(3) + ", " + speeds.get(4));

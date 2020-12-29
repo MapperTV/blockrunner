@@ -3,9 +3,7 @@ package tv.mapper.blockrunner.config;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.block.Block;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.ITag.INamedTag;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
 import tv.mapper.blockrunner.BlockRunner;
@@ -13,19 +11,9 @@ import tv.mapper.blockrunner.BlockRunner;
 public class ConfigChecker
 {
     private static List<String> tagList = new ArrayList<String>();
-    private static boolean firstCheck = true;
 
     public static void check()
     {
-        if(firstCheck)
-        {
-            for(INamedTag<Block> t : BlockTags.getAllTags())
-                tagList.add(t.getName().toString());
-            firstCheck = false;
-            if(BlockRunner.debug)
-                BlockRunner.LOGGER.debug("◘ Tag list: " + tagList);
-        }
-
         if(RunnerConfig.ServerConfig.CONFIG_A_ENABLE.get())
             checkList(RunnerConfig.ServerConfig.CONFIG_A_BLOCKS.get(), 1);
         if(RunnerConfig.ServerConfig.CONFIG_B_ENABLE.get())
@@ -41,6 +29,14 @@ public class ConfigChecker
     private static void checkList(ArrayList<String> list, int config)
     {
         String attribute = config == 1 ? "A" : config == 2 ? "B" : config == 3 ? "C" : config == 4 ? "D" : "E";
+
+        // Get all tags loaded by the game
+        tagList.clear();
+        for(ResourceLocation t : BlockTags.getCollection().getRegisteredTags())
+            tagList.add(t.toString());
+
+        if(BlockRunner.debug)
+            BlockRunner.LOGGER.info("◘ Tag list: " + tagList);
 
         for(String block : list)
         {
