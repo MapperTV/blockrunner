@@ -48,7 +48,7 @@ public class RunnerConfig
         ServerConfig(ForgeConfigSpec.Builder serverBuilder)
         {
             // Defaut config A
-            default_config_a.add("minecraft:grass_path");
+            default_config_a.add("minecraft:dirt_path");
             default_config_a.add("#forge:cobblestone");
             default_config_a.add("minecraft:mossy_cobblestone");
             default_config_a.add("minecraft:cobblestone_stairs");
