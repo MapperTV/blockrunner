@@ -24,11 +24,11 @@ import tv.mapper.blockrunner.config.RunnerConfig;
 @Mod.EventBusSubscriber(modid = BlockRunner.MODID)
 public class RunnerEvent
 {
-    private static AttributeModifier roadAttributeA;
-    private static AttributeModifier roadAttributeB;
-    private static AttributeModifier roadAttributeC;
-    private static AttributeModifier roadAttributeD;
-    private static AttributeModifier roadAttributeE;
+    private static AttributeModifier blockAttributeA;
+    private static AttributeModifier blockAttributeB;
+    private static AttributeModifier blockAttributeC;
+    private static AttributeModifier BlockAttributeD;
+    private static AttributeModifier blockAttributeE;
 
     private static int attribute = 0;
     private static int previousAttribute = 0;
@@ -67,11 +67,11 @@ public class RunnerEvent
 
     private static void setAttributes(double speedA, double speedB, double speedC, double speedD, double speedE)
     {
-        roadAttributeA = new AttributeModifier(UUID.fromString("aed652ce-7d33-480e-89ca-dacf858d7596"), "Road Speed Modifier A", speedA, AttributeModifier.Operation.ADDITION);
-        roadAttributeB = new AttributeModifier(UUID.fromString("1df40977-2b88-4f19-97c8-bcb2fe280054"), "Road Speed Modifier B", speedB, AttributeModifier.Operation.ADDITION);
-        roadAttributeC = new AttributeModifier(UUID.fromString("181b23a1-4974-4832-bd10-41f38e8bbe10"), "Road Speed Modifier C", speedC, AttributeModifier.Operation.ADDITION);
-        roadAttributeD = new AttributeModifier(UUID.fromString("bfab8ac9-05ee-4ffe-89ff-218742d32cc2"), "Road Speed Modifier D", speedD, AttributeModifier.Operation.ADDITION);
-        roadAttributeE = new AttributeModifier(UUID.fromString("29520a66-3e58-423a-ab0a-cad04e9f5e41"), "Road Speed Modifier E", speedE, AttributeModifier.Operation.ADDITION);
+        blockAttributeA = new AttributeModifier(UUID.fromString("aed652ce-7d33-480e-89ca-dacf858d7596"), "Block Speed Modifier A", speedA, AttributeModifier.Operation.ADDITION);
+        blockAttributeB = new AttributeModifier(UUID.fromString("1df40977-2b88-4f19-97c8-bcb2fe280054"), "Block Speed Modifier B", speedB, AttributeModifier.Operation.ADDITION);
+        blockAttributeC = new AttributeModifier(UUID.fromString("181b23a1-4974-4832-bd10-41f38e8bbe10"), "Block Speed Modifier C", speedC, AttributeModifier.Operation.ADDITION);
+        BlockAttributeD = new AttributeModifier(UUID.fromString("bfab8ac9-05ee-4ffe-89ff-218742d32cc2"), "Block Speed Modifier D", speedD, AttributeModifier.Operation.ADDITION);
+        blockAttributeE = new AttributeModifier(UUID.fromString("29520a66-3e58-423a-ab0a-cad04e9f5e41"), "Block Speed Modifier E", speedE, AttributeModifier.Operation.ADDITION);
     }
 
     @SubscribeEvent
@@ -176,19 +176,19 @@ public class RunnerEvent
         switch(previousAttribute)
         {
             case 1:
-                entity.getAttribute(Attributes.MOVEMENT_SPEED).removeModifier(roadAttributeA);
+                entity.getAttribute(Attributes.MOVEMENT_SPEED).removeModifier(blockAttributeA);
                 break;
             case 2:
-                entity.getAttribute(Attributes.MOVEMENT_SPEED).removeModifier(roadAttributeB);
+                entity.getAttribute(Attributes.MOVEMENT_SPEED).removeModifier(blockAttributeB);
                 break;
             case 3:
-                entity.getAttribute(Attributes.MOVEMENT_SPEED).removeModifier(roadAttributeC);
+                entity.getAttribute(Attributes.MOVEMENT_SPEED).removeModifier(blockAttributeC);
                 break;
             case 4:
-                entity.getAttribute(Attributes.MOVEMENT_SPEED).removeModifier(roadAttributeD);
+                entity.getAttribute(Attributes.MOVEMENT_SPEED).removeModifier(BlockAttributeD);
                 break;
             case 5:
-                entity.getAttribute(Attributes.MOVEMENT_SPEED).removeModifier(roadAttributeE);
+                entity.getAttribute(Attributes.MOVEMENT_SPEED).removeModifier(blockAttributeE);
                 break;
             case 0:
             default:
@@ -205,24 +205,24 @@ public class RunnerEvent
             case 0:
                 break;
             case 1:
-                if(!entity.getAttribute(Attributes.MOVEMENT_SPEED).hasModifier(roadAttributeA))
-                    entity.getAttribute(Attributes.MOVEMENT_SPEED).addPermanentModifier(roadAttributeA);
+                if(!entity.getAttribute(Attributes.MOVEMENT_SPEED).hasModifier(blockAttributeA))
+                    entity.getAttribute(Attributes.MOVEMENT_SPEED).addPermanentModifier(blockAttributeA);
                 break;
             case 2:
-                if(!entity.getAttribute(Attributes.MOVEMENT_SPEED).hasModifier(roadAttributeB))
-                    entity.getAttribute(Attributes.MOVEMENT_SPEED).addPermanentModifier(roadAttributeB);
+                if(!entity.getAttribute(Attributes.MOVEMENT_SPEED).hasModifier(blockAttributeB))
+                    entity.getAttribute(Attributes.MOVEMENT_SPEED).addPermanentModifier(blockAttributeB);
                 break;
             case 3:
-                if(!entity.getAttribute(Attributes.MOVEMENT_SPEED).hasModifier(roadAttributeC))
-                    entity.getAttribute(Attributes.MOVEMENT_SPEED).addPermanentModifier(roadAttributeC);
+                if(!entity.getAttribute(Attributes.MOVEMENT_SPEED).hasModifier(blockAttributeC))
+                    entity.getAttribute(Attributes.MOVEMENT_SPEED).addPermanentModifier(blockAttributeC);
                 break;
             case 4:
-                if(!entity.getAttribute(Attributes.MOVEMENT_SPEED).hasModifier(roadAttributeD))
-                    entity.getAttribute(Attributes.MOVEMENT_SPEED).addPermanentModifier(roadAttributeD);
+                if(!entity.getAttribute(Attributes.MOVEMENT_SPEED).hasModifier(BlockAttributeD))
+                    entity.getAttribute(Attributes.MOVEMENT_SPEED).addPermanentModifier(BlockAttributeD);
                 break;
             case 5:
-                if(!entity.getAttribute(Attributes.MOVEMENT_SPEED).hasModifier(roadAttributeE))
-                    entity.getAttribute(Attributes.MOVEMENT_SPEED).addPermanentModifier(roadAttributeE);
+                if(!entity.getAttribute(Attributes.MOVEMENT_SPEED).hasModifier(blockAttributeE))
+                    entity.getAttribute(Attributes.MOVEMENT_SPEED).addPermanentModifier(blockAttributeE);
                 break;
             default:
                 BlockRunner.LOGGER.error("Invalid attribute selected!");
