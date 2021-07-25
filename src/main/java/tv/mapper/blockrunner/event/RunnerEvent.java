@@ -4,17 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import net.minecraft.block.Block;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.event.config.ModConfigEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import tv.mapper.blockrunner.BlockRunner;
 import tv.mapper.blockrunner.config.ConfigChecker;
@@ -38,7 +39,7 @@ public class RunnerEvent
         FMLJavaModLoadingContext.get().getModEventBus().addListener(RunnerEvent::configChange);
     }
 
-    static void configChange(final ModConfig.Reloading event)
+    static void configChange(final ModConfigEvent.Reloading event)
     {
         ModConfig config = event.getConfig();
 
@@ -85,11 +86,11 @@ public class RunnerEvent
             firstLaunch = false;
         }
 
-        if(player instanceof PlayerEntity && !player.getEntityWorld().isRemote)
+        if(player instanceof Player && !player.getCommandSenderWorld().isClientSide)
         {
             if(player.isOnGround())
             {
-                Block block = player.getEntityWorld().getBlockState(new BlockPos(player.getPosX(), player.getBoundingBox().minY - (double)0.05F, player.getPosZ())).getBlock();
+                Block block = player.getCommandSenderWorld().getBlockState(new BlockPos(player.getX(), player.getBoundingBox().minY - (double)0.05F, player.getZ())).getBlock();
                 String playerBlock = block.getRegistryName().toString();
 
                 previousAttribute = attribute;
@@ -161,13 +162,13 @@ public class RunnerEvent
                     if(BlockRunner.debug)
                         BlockRunner.LOGGER.debug("Walking on block " + block + ", applying attribute n°" + attribute);
 
-                    applyAttribute(previousAttribute, attribute, (PlayerEntity)player);
+                    applyAttribute(previousAttribute, attribute, (Player)player);
                 }
             }
         }
     }
 
-    private static void resetAttribute(int previousAttribute, PlayerEntity entity)
+    private static void resetAttribute(int previousAttribute, Player entity)
     {
         if(BlockRunner.debug)
             BlockRunner.LOGGER.debug("Previous: " + previousAttribute);
@@ -195,7 +196,7 @@ public class RunnerEvent
         }
     }
 
-    private static void applyAttribute(int previousAttribute, int attribute, PlayerEntity entity)
+    private static void applyAttribute(int previousAttribute, int attribute, Player entity)
     {
         resetAttribute(previousAttribute, entity);
 
@@ -205,23 +206,23 @@ public class RunnerEvent
                 break;
             case 1:
                 if(!entity.getAttribute(Attributes.MOVEMENT_SPEED).hasModifier(roadAttributeA))
-                    entity.getAttribute(Attributes.MOVEMENT_SPEED).applyPersistentModifier(roadAttributeA);
+                    entity.getAttribute(Attributes.MOVEMENT_SPEED).addPermanentModifier(roadAttributeA);
                 break;
             case 2:
                 if(!entity.getAttribute(Attributes.MOVEMENT_SPEED).hasModifier(roadAttributeB))
-                    entity.getAttribute(Attributes.MOVEMENT_SPEED).applyPersistentModifier(roadAttributeB);
+                    entity.getAttribute(Attributes.MOVEMENT_SPEED).addPermanentModifier(roadAttributeB);
                 break;
             case 3:
                 if(!entity.getAttribute(Attributes.MOVEMENT_SPEED).hasModifier(roadAttributeC))
-                    entity.getAttribute(Attributes.MOVEMENT_SPEED).applyPersistentModifier(roadAttributeC);
+                    entity.getAttribute(Attributes.MOVEMENT_SPEED).addPermanentModifier(roadAttributeC);
                 break;
             case 4:
                 if(!entity.getAttribute(Attributes.MOVEMENT_SPEED).hasModifier(roadAttributeD))
-                    entity.getAttribute(Attributes.MOVEMENT_SPEED).applyPersistentModifier(roadAttributeD);
+                    entity.getAttribute(Attributes.MOVEMENT_SPEED).addPermanentModifier(roadAttributeD);
                 break;
             case 5:
                 if(!entity.getAttribute(Attributes.MOVEMENT_SPEED).hasModifier(roadAttributeE))
-                    entity.getAttribute(Attributes.MOVEMENT_SPEED).applyPersistentModifier(roadAttributeE);
+                    entity.getAttribute(Attributes.MOVEMENT_SPEED).addPermanentModifier(roadAttributeE);
                 break;
             default:
                 BlockRunner.LOGGER.error("Invalid attribute selected!");

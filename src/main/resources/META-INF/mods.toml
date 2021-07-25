@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="[35,)"
+loaderVersion="[37,)"
 license="MIT License"
 issueTrackerURL="https://github.com/MapperTV/blockrunner/issues"
 [[mods]]
@@ -16,13 +16,13 @@ description="BlockRunner allows moving faster on specific blocks that can be con
 [[dependencies.blockrunner]]
     modId="forge"
     mandatory=true
-    versionRange="[35.1.0,)"
+    versionRange="[37.0.7,)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.blockrunner]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.16.4]"
+    versionRange="[1.17.1]"
     ordering="NONE"
     side="BOTH"

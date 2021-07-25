@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.tags.BlockTags;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
 import tv.mapper.blockrunner.BlockRunner;
 
@@ -32,7 +32,7 @@ public class ConfigChecker
 
         // Get all tags loaded by the game
         tagList.clear();
-        for(ResourceLocation t : BlockTags.getCollection().getRegisteredTags())
+        for(ResourceLocation t : BlockTags.getAllTags().getAvailableTags())
             tagList.add(t.toString());
 
         if(BlockRunner.debug)
